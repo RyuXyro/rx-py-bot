@@ -10,7 +10,7 @@ import os
 intents = discord.Intents.default()
 intents.members = True
 
-token = 'MTEyNjkwNDQ2MTQyODc5NzUwMg.G9GP-g.KJPmZ8ksfVOJ_CGBUmY182dgalpS0maIuCcWJw'
+token = ''
 client = commands.Bot(command_prefix = '!', intents=intents)
 
 
