@@ -4,7 +4,7 @@ from discord import Member
 from discord.ext.commands import has_permissions, MissingPermissions
 import os
 
-# from apikey import *
+# from apikeys import token
 
 
 intents = discord.Intents.default()
@@ -18,14 +18,14 @@ client = commands.Bot(command_prefix = '!', intents=intents)
 
 @client.event
 async def on_ready():
-    log.info(f'Your Darling {bot.user.name} Is Online')
+    await client.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.playing, name='With KazuoYuuka'))
     print('----------------------')
     print(f'| {bot.user.display_name} Is Online |')
     print('----------------------')
 
 @client.event
 async def on_member_join(member):
-    print(f'"{bot.user.name}" Join Server:{guild.name} | ID: {guild.id} \n with {guild.member_count} Member Inside')
+    print(f'"{bot.user.name}" Join Server:{guild.name} | ID: {guild.id}\nwith {guild.member_count} Member Inside')
     await channel.send('Hello..')
 
 @client.event
@@ -34,10 +34,12 @@ async def on_member_remove(member):
 
 @client.event
 async def on_message(message):
-    
-    if message.content == "hi":
+    if message.content == "stpd":
         await message.delete()
-        await message.channel.send(f'{user.user.name} Dont send that again')
+        await message.channel.send(f'{member.user.name} Dont send that again')
+    if message.content == "stupid":
+        await message.delete()
+        await message.channel.send(f'{member.user.name} Dont send that again')
 
 
 # bot command
@@ -75,7 +77,7 @@ async def leave(ctx):
 @has_permissions(kick_members = True)
 async def kick(ctx, member:discord.Member, *, reason=None):
     await member.kick(reason=reason)
-    await ctx.send(f'User {member} has been Kicked')
+    await ctx.send(f'{member} has been Kicked')
 
 @kick.error
 async def kick_error(ctx, error):
@@ -87,7 +89,7 @@ async def kick_error(ctx, error):
 @has_permissions(ban_members = True)
 async def ban(ctx, member:discord.Member, *, reason=None):
     await member.ban(reason=reason)
-    await ctx.send(f'User {member} has been banned')
+    await ctx.send(f'{member} has been banned')
 
 @ban.error
 async def ban_error(ctx, error):
@@ -123,6 +125,9 @@ async def unban_error(ctx, error):
 async def embed(ctx):
     embed = discord.Embed(title="Testing", url="https://google.com", description="Testing embed in python", color=0x4dff4d)
     embed.set_author(name=ctx.author.display_name, url="https://instagram.com/kazuo_yuuka", icon_url=ctx.author.avatar_url)
-    await ctx.send(embed)
+    embed.add_field(name="Test 1", value="Field 1", inline=True)
+    embed.add_field(name="Test 2", value="Field 2", inline=True)
+    embed.set_footer(text="this is Footer")
+    await ctx.send(embed=embed)
 
 client.run(token)
